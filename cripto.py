@@ -1,3 +1,4 @@
+import string
 alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def Search(huruf):
@@ -31,6 +32,34 @@ def VigenereSimpleDecrypt(cipher, kunci):
 			kalimat += char
 	print(kalimat)
 
+def VigenereExtendedEncrypt(kalimat, kunci):
+	i = 0
+	cipher = ''
+	for char in kalimat:
+		if (char in string.printable):
+			cipher += chr((ord(char) + ord(kunci[i])) % 256)
+			if (i < len(kunci) - 1):
+				i += 1
+			else:
+				i = 0
+		else:
+			cipher += char
+	print(cipher)
+
+def VigenereExtendedDecrypt(kalimat, kunci):
+	i = 0
+	cipher = ''
+	for char in kalimat:
+		if (char in string.ascii_letters):
+			cipher += chr((ord(char) - ord(kunci[i])) % 256)
+			if (i < len(kunci) - 1):
+				i += 1
+			else:
+				i = 0
+		else:
+			cipher += char
+	print(cipher)
+
 kalimat = input("Masukkan sebuah kalimat: ")
 print("Masukkan 1 untuk menggunakan Vigenere Cipher standard")
 print("Masukkan 2 untuk menggunakan Vigenere Cipher extended")
@@ -45,7 +74,12 @@ if (pilihan == '1'):
 	elif (pil == 'dec'):
 		VigenereSimpleDecrypt(kalimat, kunci)
 elif (pilihan == '2'):
-	None
+	pil = input("Masukkan 'enc' atau 'dec': ")
+	kunci = input("Masukkan key: ")
+	if (pil == 'enc'):
+		VigenereExtendedEncrypt(kalimat, kunci)
+	elif (pil == 'dec'):
+		VigenereExtendedDecrypt(kalimat, kunci)
 elif (pilihan == '3'):
 	None
 else:
